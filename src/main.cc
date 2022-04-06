@@ -8,8 +8,10 @@
 #include <FL/Fl_Button.H>
 
 void handle_box_click(Fl_Button* button, void* data) {
-  spdlog::info("{}: when: {}, value: {}",
-    __FILE__, button->when(), +button->value());
+  SPDLOG_INFO("{}: when: {}, value: {}",
+               __func__,
+               button->when(),
+               +button->value());
 
   // closing all windows ends the application
   Fl_Window* win = reinterpret_cast<Fl_Window*>(data);
