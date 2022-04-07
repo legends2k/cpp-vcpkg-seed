@@ -6,31 +6,44 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Button.H>
+#include <FL/names.h>
 
-void handle_box_click(Fl_Button* button, void* data) {
-  SPDLOG_INFO("{}: when: {}, value: {}",
-               __func__,
-               button->when(),
-               +button->value());
+namespace {
 
-  // closing all windows ends the application
-  Fl_Window* win = reinterpret_cast<Fl_Window*>(data);
-  win->hide();
+void handle_button_click(Fl_Widget* w, void* data) {
+  Fl_Button* button = static_cast<Fl_Button*>(w);
+
+  switch (Fl::event()) {
+  case FL_KEYDOWN:
+  case FL_RELEASE:
+  case FL_SHORTCUT:
+  {
+    SPDLOG_INFO("{}: Hiding window on event: {}",
+      __func__,
+      fl_eventnames[Fl::event()]);
+    // closing all windows ends the application
+    Fl_Window* win = static_cast<Fl_Window*>(data);
+    win->hide();
+  }
+  break;
+  default:
+    SPDLOG_WARN("{}: {} unhandled", __func__, fl_eventnames[Fl::event()]);
+  }
 }
+
+}  // namespace
 
 int main(int argc, char** argv) {
   spdlog::info("Hello, world!");
   auto window = std::make_unique<Fl_Window>(340, 180);
   spdlog::info("Window created");
-  auto button = new Fl_Button(20, 40, 300, 100, "Hello, World!");
+  auto button = new Fl_Button(20, 40, 300, 100, "&Hello, World!");
   spdlog::info("Button created");
   button->box(FL_UP_BOX);
   button->labelfont(FL_BOLD + FL_ITALIC);
   button->labelsize(36);
   button->labeltype(FL_SHADOW_LABEL);
-  // https://graphics.cs.wisc.edu/WP/cs559-sp2015/2015/02/12/understanding-fltk-callbacks/
-  button->when(FL_WHEN_RELEASE | FL_WHEN_CHANGED);
-  button->callback(reinterpret_cast<Fl_Callback*>(&handle_box_click), window.get());
+  button->callback(&handle_button_click, window.get());
   spdlog::info("Window compiled");
   window->end();
   spdlog::info("Window shown");
