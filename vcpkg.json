@@ -4,6 +4,7 @@
   "dependencies": [
     "spdlog",
     "fltk"
-  ]
+  ],
+  "builtin-baseline": "ec547c15d6b9b426c1d9666adc9a79fd2c46d79e"
 }
 
