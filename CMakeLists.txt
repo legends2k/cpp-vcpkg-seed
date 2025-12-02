@@ -25,9 +25,9 @@ endif()
 add_executable(${PROJECT_NAME}
   src/main.cc src/main.h)
 
-# Confirm strictly to C++17.  FlatBuffers needs C++11 or newer.
+# Confirm strictly to C++20.
 # https://cliutils.gitlab.io/modern-cmake/chapters/features/cpp11.html
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 set_target_properties(${PROJECT_NAME} PROPERTIES
   CXX_EXTENSIONS OFF
   CXX_STANDARD_REQUIRED ON)
