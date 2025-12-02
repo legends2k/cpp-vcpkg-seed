@@ -7,27 +7,26 @@ vcpkg as package manager.  Useful as seed to germinate further projects from.
 
 Make sure the following tools are installed:
 
-* C++ compiler toolchain
+* C++ compiler toolchain (just pick one)
   - **Windows**: VC++ (Visual Studio 2017+), [MinGW][] (GCC on Windows), Clang
   - **Linux**: GCC, Clang
   - **Mac**: Clang (Xcode), GCC
 * [CMake][]
 * [vcpkg][]
 
-**`cmake` should be in `$PATH` / `%PATH%`**.  Verify if `cmake --version`
+**`cmake` should be in `PATH`**.  Verify if `cmake --version`
 displays the version properly.
 
 # Build
 
-Fix `vcpkg`’s path in the `cmake` command below to the right location
-on your machine.
+Make sure `VCPKG_ROOT` is set correctly depending on how you set it up.
 
 ``` shell
 git clone https://github.com/legends2k/cpp-vcpkg-seed
 
 cd cpp-vcpkg-seed
 
-cmake -B build -DCMAKE_TOOLCHAIN_FILE=D:\vcpkg\scripts\buildsystems\vcpkg.cmake
+cmake -B build -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
 
 cmake --build build
 ```
